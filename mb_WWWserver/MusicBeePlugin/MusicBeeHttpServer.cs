@@ -200,7 +200,7 @@ namespace MusicBeePlugin
                     List<string> nowPlaying = this.getNowPlaying();
                     int index = this.mbApiInterface.NowPlayingList_GetCurrentIndex();
                     List<MusicBeeHttpServer.QueueItem> list = new List<MusicBeeHttpServer.QueueItem>();
-                    for (int i = Math.Max(0, index - 5); i < nowPlaying.Count; i++)
+                    for (int i = index; i < nowPlaying.Count; i++)
                     {
                         string npFile = nowPlaying[i];
                         MusicBeeHttpServer.QueueItem item = new MusicBeeHttpServer.QueueItem
