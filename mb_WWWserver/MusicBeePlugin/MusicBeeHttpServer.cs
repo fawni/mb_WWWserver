@@ -278,21 +278,25 @@ namespace MusicBeePlugin
                     queueListStream.Close();
                     return;
 
-                case "ADDITEM": // TODO: send back JSON
+                case "ADDITEM":
                     if (this.mbApiInterface.NowPlayingList_QueueLast(path))
                     {
+                        p.writeSuccess();
                         this.Redirect(p, "OKAdd.html");
                         return;
                     }
+                    p.writeFailure();
                     this.Redirect(p, "KOAdd.html");
                     return;
 
                 case "ADDNEXT":
                     if (this.mbApiInterface.NowPlayingList_QueueNext(path))
                     {
+                        p.writeSuccess();
                         this.Redirect(p, "OKAdd.html");
                         return;
                     }
+                    p.writeFailure();
                     this.Redirect(p, "KOAdd.html");
                     return;
 
