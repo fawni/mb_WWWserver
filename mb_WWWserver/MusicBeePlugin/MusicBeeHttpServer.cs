@@ -125,7 +125,8 @@ namespace MusicBeePlugin
                     return;
 
                 case "C_SEEK":
-                    if (path == "") {
+                    if (path == "")
+                    {
                         p.writeFailure();
                         return;
                     }
@@ -279,6 +280,15 @@ namespace MusicBeePlugin
 
                 case "ADDITEM": // TODO: send back JSON
                     if (this.mbApiInterface.NowPlayingList_QueueLast(path))
+                    {
+                        this.Redirect(p, "OKAdd.html");
+                        return;
+                    }
+                    this.Redirect(p, "KOAdd.html");
+                    return;
+
+                case "ADDNEXT":
+                    if (this.mbApiInterface.NowPlayingList_QueueNext(path))
                     {
                         this.Redirect(p, "OKAdd.html");
                         return;

@@ -1,7 +1,8 @@
-using System.IO;
+﻿using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
+using System.Windows.Forms;
 
 namespace Bend.Util
 {
@@ -29,8 +30,10 @@ namespace Bend.Util
                     }.Start();
                     Thread.Sleep(1);
                 }
-            } catch (SocketException e) {
-
+            }
+            catch (SocketException e)
+            {
+                MessageBox.Show("[mb_WWWserver] SocketException: " + e);
             }
         }
 
