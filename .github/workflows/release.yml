@@ -1,0 +1,60 @@
+name: Release
+
+on:
+  push:
+    paths:
+      - "**.cs"
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v1.1
+
+      - name: Build
+        run: |
+          dotnet build -c Release
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: mb_WWWserver
+          path: mb_WWWserver/bin/Release/mb_WWWserver.dll
+          retention-days: 1
+
+  release:
+    name: Release
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Retrieve artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: mb_WWWserver
+          path: artifact
+
+      - name: Extract artifact
+        run: |
+          cp artifact/mb_WWWserver.dll .
+
+      - name: GitHub Release
+        run: |
+          git tag -d yop || true
+          git push origin --delete yop || true
+          git tag yop
+          git push origin yop
+          gh release delete ${{ env.VERSION }} -y || true
+          gh release create ${{ env.VERSION }} -t "yop" -n "$(git rev-parse HEAD | cut -c 1-7) | $(git log -1 --pretty=%B)" ${{ env.FILES }}
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          VERSION: "yop"
+          FILES: mb_WWWserver.dll
