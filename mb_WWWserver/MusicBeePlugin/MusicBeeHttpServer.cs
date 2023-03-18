@@ -20,9 +20,9 @@ namespace MusicBeePlugin
         {
             this.NowPlaying = new MusicBeeHttpServer.QueueItem
             {
-                Title = title,
-                Artist = artist,
-                Album = album,
+                title = title,
+                artist = artist,
+                album = album,
                 file = url,
                 playing = playbackState,
                 duration = duration,
@@ -206,9 +206,9 @@ namespace MusicBeePlugin
                         string npFile = nowPlaying[i];
                         MusicBeeHttpServer.QueueItem item = new MusicBeeHttpServer.QueueItem
                         {
-                            Album = this.mbApiInterface.Library_GetFileTag(npFile, Plugin.MetaDataType.Album),
-                            Title = this.mbApiInterface.Library_GetFileTag(npFile, Plugin.MetaDataType.TrackTitle),
-                            Artist = this.mbApiInterface.Library_GetFileTag(npFile, Plugin.MetaDataType.Artist),
+                            album = this.mbApiInterface.Library_GetFileTag(npFile, Plugin.MetaDataType.Album),
+                            title = this.mbApiInterface.Library_GetFileTag(npFile, Plugin.MetaDataType.TrackTitle),
+                            artist = this.mbApiInterface.Library_GetFileTag(npFile, Plugin.MetaDataType.Artist),
                             file = npFile,
                             queued = (i == index)
                         };
@@ -262,9 +262,9 @@ namespace MusicBeePlugin
                         {
                             MusicBeeHttpServer.QueueItem item = new MusicBeeHttpServer.QueueItem
                             {
-                                Album = this.mbApiInterface.Library_GetFileTag(nextFile, Plugin.MetaDataType.Album),
-                                Title = this.mbApiInterface.Library_GetFileTag(nextFile, Plugin.MetaDataType.TrackTitle),
-                                Artist = this.mbApiInterface.Library_GetFileTag(nextFile, Plugin.MetaDataType.Artist),
+                                album = this.mbApiInterface.Library_GetFileTag(nextFile, Plugin.MetaDataType.Album),
+                                title = this.mbApiInterface.Library_GetFileTag(nextFile, Plugin.MetaDataType.TrackTitle),
+                                artist = this.mbApiInterface.Library_GetFileTag(nextFile, Plugin.MetaDataType.Artist),
                                 file = nextFile,
                                 queued = npData.Contains(nextFile)
                             };
@@ -419,11 +419,11 @@ namespace MusicBeePlugin
 
             public bool queued { get; set; }
 
-            public string Title { get; set; }
+            public string title { get; set; }
 
-            public string Artist { get; set; }
+            public string artist { get; set; }
 
-            public string Album { get; set; }
+            public string album { get; set; }
 
             public string playing { get; set; }
 
